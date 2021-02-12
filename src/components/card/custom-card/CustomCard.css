@@ -1,0 +1,26 @@
+
+.custom-card-wrapper {
+    border-radius: 3px;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    max-width: 250px;
+    margin-bottom: 7px;
+    min-width: 230px;
+}
+
+.card-header {
+	border-bottom: 1px solid #eee;
+    color: #000;
+    display: block;
+    margin: 0 0 4px;
+    overflow: hidden;
+    font-weight:600;
+    font-size:14px;
+}
+
+.card-body {
+	font-size:14px;
+}
