@@ -1,5 +1,6 @@
 import React from 'react';
-import './NewCardForm.css';
+import '../.././components.css';
+
 
 class NewCardForm extends React.Component {
   handleAdd = () => this.props.onAdd({title: this.titleRef.value, description: this.descRef.value})

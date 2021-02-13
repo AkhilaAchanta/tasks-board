@@ -9,7 +9,7 @@ class CustomAddCardLink extends React.Component {
 	render() {
 		return (
 			<div className = "add-card-link">
-			<span onClick = {this.props.onClick}>Add Card</span>
+			  <span onClick = {this.props.onClick}>Add Card</span>
 			</div>
 		)
 	}

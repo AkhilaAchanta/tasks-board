@@ -1,7 +1,0 @@
-import React from 'react';
-
-class LaneHeader extends React.Component {
-	
-}
-
-export LaneHeader;
