@@ -1,6 +1,6 @@
 Tasks Manager (React Trello)
 
-##Project description
+## Project description
 
 This project is used to create a trello like board where tasks (To Do, In Progress, Completed categories) can be managed. The tasks can be moved between different panels. The application is deployed at https://tasks-board.vercel.app
 
@@ -42,7 +42,7 @@ HTML, CSS , Javascript and React js
    iv)  Card details can be edited by clicking on the card
 
 
-System Requirements:
+## System Requirements:
 
 1) Please make sure that latest Node.js (10.16.3 or above) is installed on your system
 
