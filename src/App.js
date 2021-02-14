@@ -103,7 +103,7 @@ class App extends React.Component {
   onCardMovedToDifferentLane = (fromLaneId, toLaneId, cardId, index) => {
      let currentLane = this.state.data.lanes.find((l) => l.id === fromLaneId);
      let targetLane = this.state.data.lanes.find((l) => l.id === toLaneId);
-     let card = currentLane.cards.find((c) => c.cardId === cardId);
+     let card = currentLane.cards.find((c) => c.id === cardId);
      currentLane.cards = currentLane.cards.filter((c) => c.id !== cardId);
      let beforeIndexArray  = targetLane.cards.slice(0, index);
      beforeIndexArray.push(card);
@@ -113,9 +113,8 @@ class App extends React.Component {
 
   // To show card details in a pop up
   openCardDialog = (cardId, metaData, laneId) => {
-    console.log(cardId, laneId);
     this.setState({showCardDetails : true});
-    let lane = this.state.data.lanes.find((l) => l.id === laneId);
+    let lane = JSON.parse(JSON.stringify(this.state.data.lanes.find((l) => l.id === laneId)));
     if (lane) {
       this.selectedCard.card = lane.cards.find((c) => c.id === cardId);
       this.selectedCard.laneId = laneId;
@@ -124,12 +123,13 @@ class App extends React.Component {
 
   // to update card details
   updateCardDetails = (card, laneId) => {
-    let laneIndex = this.state.data.lanes.findIndex((l) => l.id === laneId);
+    let data = JSON.parse(JSON.stringify(this.state.data));
+    let laneIndex = data.lanes.findIndex((l) => l.id === laneId);
     if (laneIndex >= 0) {
-      let currentcard =  this.state.data.lanes[laneIndex].cards.findIndex((c) => c.id === card.id);
-      this.state.data.lanes[laneIndex].cards[currentcard] = card;
+      let currentcard =  data.lanes[laneIndex].cards.findIndex((c) => c.id === card.id);
+      data.lanes[laneIndex].cards[currentcard] = card;
     }
-    this.setState({showCardDetails : false});
+    this.setState({showCardDetails : false, data: data });
   }
 
   hideCardDetails = () => {
@@ -140,23 +140,23 @@ class App extends React.Component {
     return (
      <div className= "app">
         <div className = "App-header">
+         <i className = "board-title">Tasks Manager</i>
         </div>
         <div className = "board-details">
           <h1 className = "board-title">{this.state.boardName}</h1>
           <div className = "add-icon-button" onClick = {this.setShowNewBoard}>
-            <AddIcon  style={{ fontSize: 30 }}/>
+            <AddIcon style={{ fontSize: 30 }}/>
           </div>
         </div>
         <CompleteCardDetails card = {this.selectedCard} open = {this.state.showCardDetails} onHide = {this.hideCardDetails} onCreate = {this.updateCardDetails} />
-        <NewBoardModal  open = {this.state.showNewBoard} onHide = {this.hideNewBoard} onCreate = {this.createNewBoard} />
+        <NewBoardModal open = {this.state.showNewBoard} onHide = {this.hideNewBoard} onCreate = {this.createNewBoard} />
         <div className = "task-board">
           <Board collapsibleLanes style = {{background:'none'}} 
             components={this.components}   
             data={this.state.data} eventBusHandle={this.setEventBus} editable = {this.editableFlag} 
             onCardAdd = {this.onNewCardAdd}
             onCardMoveAcrossLanes = {this.onCardMovedToDifferentLane}
-            onCardClick={this.openCardDialog}
-        />
+            onCardClick={this.openCardDialog} />
         </div>
     </div>
    )

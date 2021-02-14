@@ -7,34 +7,48 @@ import '../.././components.css';
 import DialogContent from '@material-ui/core/DialogContent';
 
 class CompleteCardDetails extends React.Component {
-    card = {
-      title: '',
-      description: '',
-      id: null
+    state =  {
+      open: false,
+      card: {
+        id: null,
+        title: '',
+        description: ''
+      },
+      laneId: ''
     };
-    laneId = '';
     constructor(props) {
     	super(props);
-    	this.state = {open:props.open};
+    	this.state = {open: props.open,
+                    card: props.card && props.card.card ?  props.card.card : {title: '',
+                    description: '',
+                    id: null},
+                    laneId: props.card ? props.card.laneId : ''};
     }
 
     setTitleRef = (event) => {
-      this.card.title = event.target.value;
+      let cardUpd = this.state.card;
+      cardUpd.title = event.target.value;
+      this.setState({card : cardUpd});
     }
-    setDescRef = (event) => {
-      this.card.description = event.target.value;
-    }
-    componentWillReceiveProps(nextProps) {
-        if (this.state.open != nextProps.open) {
-            this.setState({
-                 open: nextProps.open,
 
-             });
-            this.card = nextProps.card ?  nextProps.card.card : {title: '',
-             description: '',
-             id: null};
-            this.laneId = nextProps.card ? nextProps.card.laneId : '';
+    setDescRef = (event) => {
+      let cardUpd = this.state.card;
+      cardUpd.description = event.target.value;
+      this.setState({card : cardUpd});
+    }
+    
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.open != nextProps.open) {
+            return {
+              open: nextProps.open,
+              card: nextProps.card && nextProps.card.card ?  nextProps.card.card : {title: '',
+                description: '',
+                id: null},
+              laneId: nextProps.card && nextProps.card ? nextProps.card.laneId : ''
+            };
+           
         }
+        return null;
      }
 
   handleClickOpen = () => {
@@ -46,7 +60,7 @@ class CompleteCardDetails extends React.Component {
   };
 
   createBoard = () => {
-     this.props.onCreate(this.card, this.laneId);
+     this.props.onCreate(this.state.card, this.state.laneId);
   }
 
   setBoardName = (ref) => this.boardName = ref;
@@ -54,16 +68,16 @@ class CompleteCardDetails extends React.Component {
  render() {
   return (
     <div>
-      <Dialog fullWidth={50} open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+      <Dialog  open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle 
       id="form-dialog-title">Update Card Details</DialogTitle>
         <DialogContent>
           <div  style={{marginBottom: 20}}>
             <div style={{marginBottom: 5}}>
-              <input type="text" defaultValue={this.card.title} onChange={this.setTitleRef} placeholder="Title" className = "card-input"/>
+              <input type="text" defaultValue={this.state.card.title} onChange={this.setTitleRef} placeholder="Title" className = "card-input"/>
             </div>
             <div style={{marginBottom: 5}}>
-              <textarea defaultValue={this.card.description} onChange={this.setDescRef} placeholder="Description" className = "card-input"></textarea>
+              <textarea style = {{height:100, width:300}} defaultValue={this.state.card.description} onChange={this.setDescRef} placeholder="Description" className = "card-input"></textarea>
             </div>
           </div>
           <button className = "card-button card-add-button" onClick={this.createBoard} color="primary">

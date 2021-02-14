@@ -9,20 +9,12 @@ class CustomLaneHeader extends React.Component {
 	render() {
 	 return (
 	    <div>
-          <header
-             style={{
-        fontWeight: '600',
-        fontSize: '15px',
-        lineHeight: '18px',
-        cursor: '-webkit-grab',
-        cursor: '-moz-grab',
-        cursor: 'grab',
-        width: '70%'
-      }}>
+          <header style={{fontWeight: '600', fontSize: '15px',lineHeight: '18px',
+        cursor: '-webkit-grab',cursor: '-moz-grab',cursor: 'grab',width: '70%'}}>
                  <div>{this.props.title}</div>
          </header>
-        </div>
-       )
+      </div>
+    )
 	}
 }
 

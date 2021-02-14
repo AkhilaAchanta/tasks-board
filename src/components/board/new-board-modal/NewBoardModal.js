@@ -16,12 +16,14 @@ class NewBoardModal extends React.Component {
     }
     
      boardName = '';
-      componentWillReceiveProps(nextProps) {
-        if (this.state.open != nextProps.open) {
-            this.setState({
+      
+    static getDerivedStateFromProps(nextProps, prevState)  {
+        if (prevState.open != nextProps.open) {
+            return {
                  open: nextProps.open
-             });
+             };
         }
+        return null;
      }
 
      handleClickOpen = () => {
@@ -45,7 +47,7 @@ class NewBoardModal extends React.Component {
             <DialogTitle id="form-dialog-title">Create New Board</DialogTitle>
             <DialogContent>
               <div  style={{marginBottom: 20}}>
-              <input id="name" placeholder=" Enter Board Name" type="text" ref={this.setBoardName} className = "card-input"/>
+              <input style = {{height:40, width:250}} id="name" placeholder=" Enter Board Name" type="text" ref={this.setBoardName} className = "card-input"/>
               </div>
               <button className = "card-button card-add-button" onClick={this.createBoard} color="primary">
                Create
